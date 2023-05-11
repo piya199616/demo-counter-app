@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Service
+meatdata:
+  name: myservice
+
+spec:
+  type: NodePort
+  ports:
+    - targetPort:
+      port:
+      nodePort: 
