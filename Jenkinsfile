@@ -44,6 +44,8 @@ pipeline{
        }
        stage('Nexus artifact upload'){
         steps{
+
+            def pomVersion = readMavenPom file: 'pom.xml'
             nexusArtifactUploader artifacts: [[
                 artifactId: 'springboot', 
                 classifier: '', 
@@ -56,7 +58,7 @@ pipeline{
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
                 repository: 'demo-app-release', 
-                version: '1.0.0'
+                version: "${pomVersion.version}"
         }
        }
        
