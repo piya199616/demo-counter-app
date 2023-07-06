@@ -78,6 +78,17 @@ pipeline{
             sh 'docker image tag $JOB_NAME.v1.$BUILD_ID pburela/$JOB_NAME:latest'
         }
        }
+
+       stage('Push to docker hub'){
+        steps{
+             withCredentials([string(credentialsId: 'dockerhub_passwd', variable: 'dockerhub_passwd')]) 
+                    {
+                     sh 'docker login -u pburela -p ${dockerhub_passwd}'
+                     sh  'docker image push pburela/$JOB_NAME:v1.$BUILD_ID'
+                     sh  'docker image push pburela/$JOB_NAME:latest'
+                   }
+        }
+       }
        
     }
 }
