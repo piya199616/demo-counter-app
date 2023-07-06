@@ -4,6 +4,12 @@ pipeline{
         maven 'maven' 
          
     }
+    environment{
+        NEXUS_VERSION = "nexus3"
+        NEXUS_PROTOCOL = "http"
+        NEXUS_URL = "18.234.208.197:8081"
+        
+    }
     stages{
         stage('Git Checkout'){
             steps{
@@ -46,6 +52,7 @@ pipeline{
         steps{
             script{
                 def pom = readMavenPom file: 'pom.xml'
+                def nexusRepo = pom.version.endsWith("SNAPSHOT") ? "demo-app-snapshots" : "demo-app-release"
             nexusArtifactUploader artifacts: [[
                 artifactId: 'springboot', 
                 classifier: '', 
@@ -54,10 +61,10 @@ pipeline{
                 ]], 
                 credentialsId: 'nexus-auth', 
                 groupId: 'com.example', 
-                nexusUrl: '54.209.198.187:8081', 
-                nexusVersion: 'nexus3', 
-                protocol: 'http', 
-                repository: 'demo-app-release', 
+                nexusUrl: NEXUS_URL, 
+                nexusVersion: NEXUS_VERSION, 
+                protocol: NEXUS_PROTOCOL, 
+                repository: nexusRepo, 
                 version: "${pom.version}"
             }
             
