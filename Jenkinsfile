@@ -73,7 +73,7 @@ pipeline{
 
        stage('Docker build'){
         steps{
-            sh 'docker build -t $JOB_NAME.v1.$BUILD_ID'
+            sh 'docker build -t $JOB_NAME.v1.$BUILD_ID .'
             sh 'docker tag $JOB_NAME.v1.$BUILD_ID pburela/$JOB_NAME.v1.$BUILD_ID'
             sh 'docker tag $JOB_NAME.v1.$BUILD_ID pburela/$JOB_NAME:latest'
         }
