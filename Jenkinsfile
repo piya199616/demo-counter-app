@@ -7,7 +7,7 @@ pipeline{
     environment{
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "18.234.208.197:8081"
+        NEXUS_URL = "44.202.65.98:8081"
         
     }
     stages{
@@ -73,9 +73,9 @@ pipeline{
 
        stage('Docker build'){
         steps{
-            sh 'docker image build -t $JOB_NAME.v1.$BUILD_ID'
-            sh 'docker image tag $JOB_NAME.v1.$BUILD_ID pburela/$JOB_NAME.v1.$BUILD_ID'
-            sh 'docker image tag $JOB_NAME.v1.$BUILD_ID pburela/$JOB_NAME:latest'
+            sh 'docker build -t $JOB_NAME.v1.$BUILD_ID'
+            sh 'docker tag $JOB_NAME.v1.$BUILD_ID pburela/$JOB_NAME.v1.$BUILD_ID'
+            sh 'docker tag $JOB_NAME.v1.$BUILD_ID pburela/$JOB_NAME:latest'
         }
        }
 
